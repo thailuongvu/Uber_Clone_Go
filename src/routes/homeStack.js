@@ -10,6 +10,7 @@ import HomeScreen from '../screens/home'
 import RideScreen from '../screens/ride'
 import CarScreen from '../screens/car'
 import ProfileScreen from '../screens/profile'
+import DesSearch from '../components/DesSearch'
 
 const HomeStack = createNativeStackNavigator()
 
@@ -21,6 +22,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name='rideScreen' component={RideScreen} />
       <HomeStack.Screen name='carScreen' component={CarScreen} />
       <HomeStack.Screen name='profileScreen' component={ProfileScreen} />
+      <HomeStack.Screen name='desSearch' component={DesSearch} />
     </HomeStack.Navigator>
   )
 }
