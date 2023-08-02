@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { selectOrigin } from '../slices/navSlice'
 function CarScreen({ navigation }) {
   const origin = useSelector(selectOrigin)
+  console.log(origin.location[0],origin.location[1])
   return (
 
 
@@ -12,8 +13,8 @@ function CarScreen({ navigation }) {
     <View className='flex-1 items-center  bg-white'>
           <MapView className='h-2/4 w-full'
     initialRegion={{
-      latitude: origin.location.lat,
-      longitude: origin.location.lng,
+      latitude: origin.location[1],
+      longitude: origin.location[0],
       latitudeDelta: 0.005,
       longitudeDelta: 0.005,
       }} />

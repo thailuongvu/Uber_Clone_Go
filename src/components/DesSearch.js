@@ -17,14 +17,13 @@ const DesSearch = () => {
 
   const getMovies = async () => {
     const query123 = 'Michigan'
-    const limit=`limit=2`
-    const session_token=`session_token=[GENERATED-UUID]`
-    const baseURL = 'https://api.mapbox.com/search/searchbox/v1/suggest?'
-    const proximity=`proximity=-83.748708,42.265837`
+    const limit=`limit=5`
+    const baseURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
+    const proximity=`proximity=106.65808,10.817548`
     try {
-      const response = await fetch(`${baseURL}q=${query}%20Stadium?language=en&${limit}&${session_token}&${proximity}&country=US&access_token=${ACCESS_TOKEN}`);
+      const response = await fetch(`${baseURL}${query}.json?${limit}&country=vn&${proximity}&access_token=${ACCESS_TOKEN}`);
       const json = await response.json();
-      setData(json.suggestions);
+      setData(json.features);
     } catch (error) {
       console.error(error);
     } finally {
@@ -75,12 +74,19 @@ const DesSearch = () => {
       ) : (
         <FlatList className='border-solid border-2 mx-2 mb-1'
           data={data}
-          keyExtractor={(item) => item.mapbox_id}
+          keyExtractor={(item) => item.id}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => navigation.navigate('rideScreen')}>
+            <TouchableOpacity onPress={() => {
+            dispatch(setOrigin({
+              location: item.geometry.coordinates,
+              description: item.text
+           }))
+           dispatch(setDestination(null))
+           navigation.navigate('carScreen')
+           }}>
                 <View className='p-2 pl-6 pb-2 pt-2 bg-white border-b-2 '>
                     <Text >
-                        {item.name}
+                        {item.place_name}
                     </Text>
 
                 </View>
