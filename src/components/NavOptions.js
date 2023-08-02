@@ -9,13 +9,13 @@ const data = [
     id: '123',
     title: 'Get a GoRide',
     image: 'https://cdn.honda.com.vn/motorbikes/December2022/3C0atxHao3Fpr79jsnVl.jpg',
-    screen: 'rideScreen'
+    screen: 'desSearch'
   },
   {
     id: '456',
     title: 'Get a GoCar',
     image: 'https://links.papareact.com/3pn',
-    screen: 'carScreen'
+    screen: 'desSearch'
   }
 ]
 const NavOptions = () => {

@@ -15,8 +15,8 @@ const DesSearch = () => {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('');
 
-  const getMovies = async () => {
-    const query123 = 'Michigan'
+
+  const getMaps = async () => {
     const limit=`limit=5`
     const baseURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
     const proximity=`proximity=106.65808,10.817548`
@@ -32,7 +32,7 @@ const DesSearch = () => {
   };
 
   useEffect(() => {
-    getMovies();
+    getMaps();
   }, [query]);
 
   return (
@@ -81,7 +81,12 @@ const DesSearch = () => {
               location: item.geometry.coordinates,
               description: item.text
            }))
-           dispatch(setDestination(null))
+           dispatch(setDestination({ 
+            location: [106.701944,
+              10.778025],
+            description:['Vincom Center'] }
+            
+           ))
            navigation.navigate('carScreen')
            }}>
                 <View className='p-2 pl-6 pb-2 pt-2 bg-white border-b-2 '>
