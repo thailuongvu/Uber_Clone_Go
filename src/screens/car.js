@@ -4,10 +4,12 @@ import MapView, { Marker }  from 'react-native-maps'
 import { useSelector } from 'react-redux'
 import { selectOrigin,selectDestination } from '../slices/navSlice'
 import {GOOGLE_MAPS_APIKEY} from '@env'
+import MapViewDirections from 'react-native-maps-directions'
+
 function CarScreen({ navigation }) {
   const origin = useSelector(selectOrigin)
   const destination = useSelector(selectDestination)
-  console.log(origin.location[0],origin.location[1])
+  console.log(origin.location[1],origin.location[0])
   return (
 
 
@@ -22,8 +24,10 @@ function CarScreen({ navigation }) {
       }} >
 
         <MapViewDirections 
-         origin={origin.location}
-         destination={destination.location}
+         origin={{latitude: origin.location[1],
+          longitude: origin.location[0]}}
+         destination={{latitude:destination.location[1] ,
+          longitude:destination.location[0] }}
          apikey={GOOGLE_MAPS_APIKEY}
          strokeWidth={3}
          strokeColor='black'/>
@@ -39,13 +43,27 @@ function CarScreen({ navigation }) {
           title='Origin'
           description={origin.description}
           identifier='origin'
-        /> 
+        />
+        
+
 
         
       )}
+      <Marker
+         coordinate={{
+          latitude:destination.location[1],
+          longitude:destination.location[0],
+
+        }}
+          title='Destination'
+          description={destination.description[0]}
+          identifier='Destination'
+          pinColor='green'
+        />
       </MapView>
       <Text>Choose Car</Text>
       <Button title='Go back' onPress={() => navigation.goBack()} />
+
     </View>
   )
 }

@@ -9,7 +9,7 @@ const data = [
     id: '123',
     title: 'Get a GoRide',
     image: 'https://cdn.honda.com.vn/motorbikes/December2022/3C0atxHao3Fpr79jsnVl.jpg',
-    screen: 'desSearch'
+    screen: 'rideScreen'
   },
   {
     id: '456',
