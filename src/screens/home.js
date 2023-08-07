@@ -18,6 +18,7 @@ import NavOptions from '../components/NavOptions'
 import NavFavourites from '../components/NavFavourites'
 import FlatListSlide from '../components/FlatListSlide'
 import SearchBar from '../components/SearchBar'
+import UserLocation from '../components/UserLocation'
 
 function HomeScreen({ navigation }) {
   return (
@@ -53,6 +54,7 @@ function HomeScreen({ navigation }) {
 
       <NavOptions />
       <NavFavourites />
+      {/* <UserLocation /> */}
       <FlatListSlide />
     </SafeAreaView>
   )

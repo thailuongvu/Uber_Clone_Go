@@ -7,12 +7,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
-import OriginSearch from './OriginSearch'
 
-const DesSearch = () => {
+const OriginSearch = () => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState();
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('');
 
@@ -40,39 +39,37 @@ const DesSearch = () => {
     
     <View classname='flex-1'>
 
-        <OriginSearch />
-        
-
-        <View className='ml-8 flex-row'>
-            <FontAwesome name="long-arrow-up" size={24} color="black" />
-            <FontAwesome name="long-arrow-down" size={24} color="black" />
-        </View>
-
         <View className='p-2 pl-6 pb-2 pt-2 bg-gray-300 m-2 flex-row'>
             <View className='mt-1'>
-                <Ionicon name='location-sharp' size={24} color='green' />
+                <Ionicon name='location-sharp' size={24} color='red' />
             </View>
             <TextInput
              className='ml-2 text-lg font-semibold'
-             placeholder='To...'
+             placeholder='From...'
              value={query}
              onChangeText={text => setQuery(text)}
+             
             />
         </View>
 
        {isLoading ? (
-        <ActivityIndicator />
+       
+            <View></View>
       ) : (
         <FlatList className='border-solid border-2 mx-2 mb-1'
           data={data}
           keyExtractor={(item) => item.id}
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => {
-            dispatch(setDestination({
+            dispatch(setOrigin({
               location: item.geometry.coordinates,
               description: item.text
            }))
-           navigation.navigate('carScreen')
+           setQuery(item.text)
+            setLoading(true)
+            
+          
+           
            }}>
                 <View className='p-2 pl-6 pb-2 pt-2 bg-white border-b-2 '>
                     <Text >
@@ -91,7 +88,7 @@ const DesSearch = () => {
   )
 }
 
-export default DesSearch
+export default OriginSearch
 const styles = StyleSheet.create({
   page: {
     flex: 1,
