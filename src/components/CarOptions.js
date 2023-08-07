@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 import { selectOrigin,selectDestination } from '../slices/navSlice'
 
+
 const CarOptions = () => {
   const origin = useSelector(selectOrigin)
   const destination = useSelector(selectDestination)
@@ -23,11 +24,14 @@ const CarOptions = () => {
   const getCar = async () => {
 
     const baseURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'
-    const desQuery=destination.location[0]+','+origin.location[1]
-    const oriQuery=origin.location[0]+','+destination.location[1]
+    const desQuery=destination.location[0]+','+destination.location[1]||'106.653805,10.797979'
+    const oriQuery=origin.location[0]+','+origin.location[1]||'106.653805,10.797980'
+    console.log(oriQuery)
+    console.log(desQuery)
     try {
       const response = await fetch(`${baseURL}${oriQuery};${desQuery}.json?access_token=${ACCESS_TOKEN}`);
       const json = await response.json();
+     
       setData(json.routes);
     } catch (error) {
       console.error(error);
@@ -38,16 +42,33 @@ const CarOptions = () => {
 
   useEffect(() => {
     getCar();
-  });
+  }, []);
 
+console.log(data[0])
   return (
     
     <View classname='flex-1'>
 
         <View className='p-2 pl-6 pb-2 pt-2 bg-gray-300 m-2 flex-row'>
-            <View className='mt-1'>
-                <Text>{data.distance}</Text>
-            </View>
+        <FlatList className='border-solid border-2 mx-2 mb-1'
+          data={data}
+          keyExtractor={(item) => item.id}
+          renderItem={({item}) => (
+            <TouchableOpacity onPress={() => {
+            
+        
+           }}>
+                <View className='p-2 pl-6 pb-2 pt-2 bg-white border-b-2 '>
+                    <Text >
+                        {item.distance} km
+                    </Text>
+
+                </View>
+
+ 
+            </TouchableOpacity>
+          )}
+        />
            
         </View>
 
