@@ -5,14 +5,13 @@ import { useSelector } from 'react-redux'
 import { selectOrigin,selectDestination } from '../slices/navSlice'
 import {GOOGLE_MAPS_APIKEY} from '@env'
 import MapViewDirections from 'react-native-maps-directions'
+import CarOptions from '../components/CarOptions'
 
 function CarScreen({ navigation }) {
   const origin = useSelector(selectOrigin)
   const destination = useSelector(selectDestination)
   console.log(origin.location[1],origin.location[0])
   return (
-
-
 
     <View className='flex-1 items-center  bg-white'>
           <MapView className='h-2/4 w-full'
@@ -61,7 +60,7 @@ function CarScreen({ navigation }) {
           pinColor='green'
         />
       </MapView>
-      <Text>Choose Car</Text>
+      <CarOptions />
       <Button title='Go back' onPress={() => navigation.goBack()} />
 
     </View>
