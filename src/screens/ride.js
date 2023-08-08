@@ -15,7 +15,10 @@ function RideScreen({ navigation }) {
     //   <Text>Choose Ride</Text>
     //   <Button title='Go back' onPress={() => navigation.goBack()} />
     // </View>
-    <MapDirection/>
+    // <MapDirection/>
+    <View>
+      
+    </View>
 
   )
 }

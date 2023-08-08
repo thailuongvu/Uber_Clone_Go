@@ -8,6 +8,7 @@ import Ionicon from 'react-native-vector-icons/Ionicons'
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 import OriginSearch from './OriginSearch'
+import DistanceMatrix from './DistanceMatrix'
 
 const DesSearch = () => {
   const navigation = useNavigation()
@@ -86,7 +87,7 @@ const DesSearch = () => {
           )}
         />
       )}
-
+      <DistanceMatrix />
     </View>
   )
 }
