@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Text, View } from 'react-native'
-import MapView  from 'react-native-maps'
+import MapView from 'react-native-maps'
 import MapDirection from '../components/MapDirection'
 function RideScreen({ navigation }) {
   return (
@@ -16,10 +16,7 @@ function RideScreen({ navigation }) {
     //   <Button title='Go back' onPress={() => navigation.goBack()} />
     // </View>
     // <MapDirection/>
-    <View>
-      
-    </View>
-
+    <View></View>
   )
 }
 export default RideScreen

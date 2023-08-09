@@ -21,7 +21,8 @@ const data = [
 const NavOptions = () => {
   const navigation = useNavigation()
   return (
-    <FlatList className='mt-5'
+    <FlatList
+      className='mt-5'
       data={data}
       horizontal
       keyExtractor={(item) => item.id}
