@@ -16,10 +16,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import { FontAwesome } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
+import { selectOrigin} from '../slices/navSlice'
 import OriginSearch from './OriginSearch'
-import DistanceMatrix from './DistanceMatrix'
+
 
 const DesSearch = () => {
+  const origin = useSelector(selectOrigin)
+  console.log(origin)
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const [isLoading, setLoading] = useState(true)
@@ -84,6 +88,7 @@ const DesSearch = () => {
                     description: item.text
                   })
                 )
+                console.log(item.geometry.coordinates)
                 navigation.navigate('carScreen')
               }}
             >
@@ -94,7 +99,7 @@ const DesSearch = () => {
           )}
         />
       )}
-      <DistanceMatrix />
+      
     </View>
   )
 }

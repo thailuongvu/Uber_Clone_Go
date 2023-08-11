@@ -8,11 +8,12 @@ import MapViewDirections from 'react-native-maps-directions'
 import CarSelected from '../components/CarSelected'
 import MapDirection from '../components/MapDirection'
 
+
 const CarScreen = () => {
   return (
     <View className='flex-1'>
       <View className='h-1/2'>
-        <MapDirection />
+        <MapDirection/>
       </View>
 
       <View className='h-1/2'>

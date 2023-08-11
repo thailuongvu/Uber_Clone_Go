@@ -3,6 +3,8 @@ import { Button, Text, View, TouchableOpacity, Image, FlatList } from 'react-nat
 import MapView, { Marker } from 'react-native-maps'
 import { useSelector } from 'react-redux'
 import { selectTravelTimeInformation } from '../slices/navSlice'
+import { useNavigation } from '@react-navigation/native'
+import DistanceMatrix from './DistanceMatrix'
 import tw from 'twrnc'
 
 const data = [
@@ -26,11 +28,14 @@ const data = [
   }
 ]
 
-function CarSelected({ navigation }) {
+const CarSelected=()=> {
+  DistanceMatrix()
   const travelTimeInformation = useSelector(selectTravelTimeInformation)
+  console.log(travelTimeInformation)
+  const navigation = useNavigation()
   const [selected, setSelected] = useState(null)
-  const distance = parseFloat((travelTimeInformation.distance / 1000).toString()).toFixed(2)
-  const time = parseFloat((travelTimeInformation.duration / 60).toString()).toFixed(2)
+  const distance = parseFloat((travelTimeInformation?.distance / 1000).toString()).toFixed(2)
+  const time = parseFloat((travelTimeInformation?.duration / 60).toString()).toFixed(2)
 
   // distance=parseFloat(distance)
   console.log(distance)
@@ -68,7 +73,9 @@ function CarSelected({ navigation }) {
       />
 
       <View className='mt-auto border-t border-gray-200'>
-        <TouchableOpacity style={tw`bg-black py-3 m-3 ${!selected && 'bg-gray-300'}`} disabled={!selected}>
+        <TouchableOpacity style={tw`bg-black py-3 m-3 ${!selected && 'bg-gray-300'}`} disabled={!selected}
+          onPress={() => navigation.navigate('waitingScreen')}
+        >
           <Text className='text-center text-white text-xl'>Choose {selected?.title}</Text>
         </TouchableOpacity>
       </View>

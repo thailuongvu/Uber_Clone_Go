@@ -22,7 +22,7 @@ const OriginSearch = () => {
   const dispatch = useDispatch()
   const [isLoading, setLoading] = useState()
   const [data, setData] = useState([])
-  const [query, setQuery] = useState('')
+  const [queryOri, setQueryOri] = useState('')
 
   const getMaps = async () => {
     const limit = `limit=5`
@@ -30,7 +30,7 @@ const OriginSearch = () => {
     const proximity = `proximity=106.65808,10.817548`
     try {
       const response = await fetch(
-        `${baseURL}${query}.json?${limit}&country=vn&${proximity}&access_token=${ACCESS_TOKEN}`
+        `${baseURL}${queryOri}.json?${limit}&country=vn&${proximity}&access_token=${ACCESS_TOKEN}`
       )
       const json = await response.json()
       setData(json.features)
@@ -43,7 +43,7 @@ const OriginSearch = () => {
 
   useEffect(() => {
     getMaps()
-  }, [query])
+  }, [queryOri])
 
   return (
     <View classname='flex-1'>
@@ -54,8 +54,8 @@ const OriginSearch = () => {
         <TextInput
           className='ml-2 text-lg font-semibold'
           placeholder='From...'
-          value={query}
-          onChangeText={(text) => setQuery(text)}
+          value={queryOri}
+          onChangeText={(text) => setQueryOri(text)}
         />
       </View>
 
@@ -75,8 +75,9 @@ const OriginSearch = () => {
                     description: item.text
                   })
                 )
-                setQuery(item.text)
+                setQueryOri(item.text)
                 setLoading(true)
+                console.log(item.geometry.coordinates)
               }}
             >
               <View className='p-2 pl-6 pb-2 pt-2 bg-white border-b-2 '>

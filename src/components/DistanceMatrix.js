@@ -21,12 +21,17 @@ const DistanceMatrix = () => {
   const destination = useSelector(selectDestination)
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const getDistance = async () => {
-    const baseURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'
+  const baseURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'
     const desQuery = destination.location[0] + ',' + destination.location[1] || '106.653805,10.797979'
     const oriQuery = origin.location[0] + ',' + origin.location[1] || '106.653805,10.797980'
-    console.log(oriQuery)
-    console.log(desQuery)
+    console.log("DisOri"+oriQuery)
+    console.log("DisDes"+desQuery)
+  const getDistance = async () => {
+    // const baseURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'
+    // const desQuery = destination?.location[0] + ',' + destination?.location[1] || '106.653805,10.797979'
+    // const oriQuery = origin?.location[0] + ',' + origin?.location[1] || '106.653805,10.797980'
+    // console.log(oriQuery)
+    // console.log(desQuery)
     // try {
     //   const response = await fetch(`${baseURL}${oriQuery};${desQuery}.json?access_token=${ACCESS_TOKEN}`);
     //   const json = await response.json();
@@ -49,7 +54,6 @@ const DistanceMatrix = () => {
     getDistance()
   }, [origin, destination])
 
-  return <View classname='flex-1'></View>
 }
 
 export default DistanceMatrix
