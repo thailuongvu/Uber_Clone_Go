@@ -3,16 +3,58 @@ import { Button, Text, View, TouchableOpacity, Image, FlatList } from 'react-nat
 import MapView, { Marker } from 'react-native-maps'
 import { useSelector } from 'react-redux'
 import { selectOrigin, selectDestination, selectTravelTimeInformation } from '../slices/navSlice'
-import { GOOGLE_MAPS_APIKEY } from '@env'
+import { ACCESS_TOKEN } from '@env'
 import MapViewDirections from 'react-native-maps-directions'
 import { Polyline } from 'react-native-maps'
+
+const decodePolyline = (polyline) => {
+  let index = 0,
+    lat = 0,
+    lng = 0,
+    coordinates = [];
+
+  while (index < polyline.length) {
+    let shift = 0,
+      result = 0,
+      byte;
+
+    do {
+      byte = polyline.charCodeAt(index++) - 63;
+      result |= (byte & 0x1f) << shift;
+      shift += 5;
+    } while (byte >= 0x20);
+
+    let dlat = (result & 1) !== 0 ? ~(result >> 1) : result >> 1;
+    lat += dlat;
+
+    shift = 0;
+    result = 0;
+
+    do {
+      byte = polyline.charCodeAt(index++) - 63;
+      result |= (byte & 0x1f) << shift;
+      shift += 5;
+    } while (byte >= 0x20);
+
+    let dlng = (result & 1) !== 0 ? ~(result >> 1) : result >> 1;
+    lng += dlng;
+
+    coordinates.push({ latitude: lat * 1e-5, longitude: lng * 1e-5 });
+  }
+
+  return coordinates;
+};
 
 const MapDirection = () => {
   const origin = useSelector(selectOrigin)
   const destination = useSelector(selectDestination)
+  const desQuery = destination.location[0] + ',' + destination.location[1] || '106.653805,10.797979'
+  const oriQuery = origin.location[0] + ',' + origin.location[1] || '106.653805,10.797980'
+
   const [show,setShow]=useState(false)
   const [data,setData]=useState([])
-  const cor=([])
+  const baseURL='https://api.mapbox.com/directions/v5/mapbox/driving'
+  const [coordinates, setCoordinates] = useState([]);
   console.log("MapDi"+origin?.location)
   console.log("MapDi"+destination?.location) 
   const mapRef = useRef()
@@ -22,25 +64,25 @@ const MapDirection = () => {
     try {
       const response = await fetch(
         // `${baseURL}${queryOri}.json?${limit}&country=vn&${proximity}&access_token=${ACCESS_TOKEN}`
-        'https://api.mapbox.com/directions/v5/mapbox/driving/106.653805,10.797979;106.677042,10.800118?access_token=pk.eyJ1IjoibHVvbmd2dXRoYWkxc3QiLCJhIjoiY2xrNDgza2NmMGZjMjNyczE3bjd1OXY5MCJ9.xbO5OpEwi_tGDto0LhGuHA'
+        `${baseURL}/${oriQuery};${desQuery}?access_token=${ACCESS_TOKEN}`
       )
-      const json = await response.json()
-      setData(json.routes[0].legs[0].steps[0].intersections)
-      console.log(data)
+      const data = await response.json();
+      const route = data.routes[0];
+      const routeCoordinates = route.geometry;
+      // console.log(routeCoordinates);
+      const decodedCoordinates = decodePolyline(routeCoordinates);
+      setCoordinates(decodedCoordinates);
     } catch (error) {
       console.error(error)
     } finally {
-      for(let r in data){
-        cor.push(data[r].location)
-      }
-      console.log(cor)
+      
     }
   }
   
   useEffect(() => {
     getRoute()
 
-    console.log(data)
+    console.log(coordinates)
     if (!origin || !destination) return
     //zoom & fit to markers
     mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
@@ -70,13 +112,7 @@ const MapDirection = () => {
           strokeColor='black'
         />)} */}
          <Polyline
-    coordinates={[
-      {latitude: origin?.location[1],
-        longitude: origin?.location[0],},
-      { latitude: destination.location[1],
-        longitude: destination.location[0]},
-
-    ]}
+    coordinates={coordinates}
     strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
 
     strokeWidth={6}

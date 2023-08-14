@@ -24,7 +24,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name='carScreen' component={CarScreen} />
       <HomeStack.Screen name='profileScreen' component={ProfileScreen} />
       <HomeStack.Screen name='desSearch' component={DesSearch} />
-      <HomeStack.Screen name='waitingScreen' component={WaitingScreen} />
+      <HomeStack.Screen name='waitingScreen' options={{ headerShown: false }} component={WaitingScreen} />
     </HomeStack.Navigator>
   )
 }
