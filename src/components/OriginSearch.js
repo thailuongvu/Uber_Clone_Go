@@ -72,7 +72,7 @@ const OriginSearch = () => {
                 dispatch(
                   setOrigin({
                     location: item.geometry.coordinates,
-                    description: item.text
+                    description: item.place_name
                   })
                 )
                 setQueryOri(item.text)

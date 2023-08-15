@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 import MapDirection from '../components/MapDirection'
 import { selectOrigin, selectDestination, selectTravelTimeInformation } from '../slices/navSlice'
-
+import WaitingAccept from '../components/WaitingAccept'
 
 
 const WaitingScreen = () => {
@@ -37,9 +37,8 @@ const WaitingScreen = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialIcon className='mx-5 my-10' name='arrow-back-ios' size={37} color='black' />
         </TouchableOpacity>
-        <View className='border-solid border-2 mx-2 h-80 absolute bottom-5 left-0 right-0 bg-[#eff8f3] '>
-            <Text className='text-lg font-semibold'>Waiting...</Text>
-            <Text className='text-lg font-semibold'>Driver is on the way</Text>
+        <View className='border-solid border-2 mx-2 absolute bottom-5 left-0 right-0 bg-[#eff8f3] '>
+           <WaitingAccept/>
         </View>
     {/* Other components */}
   </View>

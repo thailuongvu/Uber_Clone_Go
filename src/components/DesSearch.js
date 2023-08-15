@@ -85,7 +85,7 @@ const DesSearch = () => {
                 dispatch(
                   setDestination({
                     location: item.geometry.coordinates,
-                    description: item.text
+                    description: item.place_name
                   })
                 )
                 console.log(item.geometry.coordinates)

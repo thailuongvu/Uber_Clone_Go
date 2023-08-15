@@ -6,6 +6,9 @@ import { selectTravelTimeInformation } from '../slices/navSlice'
 import { useNavigation } from '@react-navigation/native'
 import DistanceMatrix from './DistanceMatrix'
 import tw from 'twrnc'
+import { useDispatch } from 'react-redux'
+import { setTravelInfoUser } from '../slices/navSlice'
+
 
 const data = [
   {
@@ -32,10 +35,11 @@ const CarSelected=()=> {
   DistanceMatrix()
   const travelTimeInformation = useSelector(selectTravelTimeInformation)
   console.log(travelTimeInformation)
+  const dispatch = useDispatch()
   const navigation = useNavigation()
   const [selected, setSelected] = useState(null)
   const distance = parseFloat((travelTimeInformation?.distance / 1000).toString()).toFixed(2)
-  const time = parseFloat((travelTimeInformation?.duration / 60).toString()).toFixed(2)
+  const time = parseFloat((travelTimeInformation?.duration / 60).toString()).toFixed(1)
 
   // distance=parseFloat(distance)
   console.log(distance)
@@ -49,7 +53,15 @@ const CarSelected=()=> {
         renderItem={({ item: { id, title, multiplier, image }, item }) => (
           <TouchableOpacity
             style={tw`flex-row justify-between items-center px-8 ${id === selected?.id && 'bg-gray-200'}`}
-            onPress={() => setSelected(item)}
+            onPress={() =>{
+              dispatch(setTravelInfoUser({
+                distance:distance,
+                time:time,
+                price:new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 9 }).format(
+                  distance * 5000 * multiplier),
+                type:title
+                }))
+              setSelected(item)}}
           >
             <Image
               style={{
