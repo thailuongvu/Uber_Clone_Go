@@ -17,9 +17,8 @@ import Ionicon from 'react-native-vector-icons/Ionicons'
 import { FontAwesome } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
-import { selectOrigin} from '../slices/navSlice'
+import { selectOrigin } from '../slices/navSlice'
 import OriginSearch from './OriginSearch'
-
 
 const DesSearch = () => {
   const origin = useSelector(selectOrigin)
@@ -99,7 +98,6 @@ const DesSearch = () => {
           )}
         />
       )}
-      
     </View>
   )
 }

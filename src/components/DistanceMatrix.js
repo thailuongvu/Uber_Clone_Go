@@ -22,10 +22,10 @@ const DistanceMatrix = () => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const baseURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'
-    const desQuery = destination.location[0] + ',' + destination.location[1] || '106.653805,10.797979'
-    const oriQuery = origin.location[0] + ',' + origin.location[1] || '106.653805,10.797980'
-    console.log("DisOri"+oriQuery)
-    console.log("DisDes"+desQuery)
+  const desQuery = destination.location[0] + ',' + destination.location[1] || '106.653805,10.797979'
+  const oriQuery = origin.location[0] + ',' + origin.location[1] || '106.653805,10.797980'
+  console.log('DisOri' + oriQuery)
+  console.log('DisDes' + desQuery)
   const getDistance = async () => {
     // const baseURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'
     // const desQuery = destination?.location[0] + ',' + destination?.location[1] || '106.653805,10.797979'
@@ -53,7 +53,6 @@ const DistanceMatrix = () => {
   useEffect(() => {
     getDistance()
   }, [origin, destination])
-
 }
 
 export default DistanceMatrix

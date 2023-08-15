@@ -9,7 +9,6 @@ import tw from 'twrnc'
 import { useDispatch } from 'react-redux'
 import { setTravelInfoUser } from '../slices/navSlice'
 
-
 const data = [
   {
     id: 'Uber-X-123',
@@ -31,7 +30,7 @@ const data = [
   }
 ]
 
-const CarSelected=()=> {
+const CarSelected = () => {
   DistanceMatrix()
   const travelTimeInformation = useSelector(selectTravelTimeInformation)
   console.log(travelTimeInformation)
@@ -53,15 +52,21 @@ const CarSelected=()=> {
         renderItem={({ item: { id, title, multiplier, image }, item }) => (
           <TouchableOpacity
             style={tw`flex-row justify-between items-center px-8 ${id === selected?.id && 'bg-gray-200'}`}
-            onPress={() =>{
-              dispatch(setTravelInfoUser({
-                distance:distance,
-                time:time,
-                price:new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 9 }).format(
-                  distance * 5000 * multiplier),
-                type:title
-                }))
-              setSelected(item)}}
+            onPress={() => {
+              dispatch(
+                setTravelInfoUser({
+                  distance: distance,
+                  time: time,
+                  price: new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                    maximumFractionDigits: 9
+                  }).format(distance * 5000 * multiplier),
+                  type: title
+                })
+              )
+              setSelected(item)
+            }}
           >
             <Image
               style={{
@@ -85,7 +90,9 @@ const CarSelected=()=> {
       />
 
       <View className='mt-auto border-t border-gray-200'>
-        <TouchableOpacity style={tw`bg-black py-3 m-3 ${!selected && 'bg-gray-300'}`} disabled={!selected}
+        <TouchableOpacity
+          style={tw`bg-black py-3 m-3 ${!selected && 'bg-gray-300'}`}
+          disabled={!selected}
           onPress={() => navigation.navigate('waitingScreen')}
         >
           <Text className='text-center text-white text-xl'>Choose {selected?.title}</Text>
