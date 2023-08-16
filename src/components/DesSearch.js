@@ -87,6 +87,7 @@ const DesSearch = () => {
                     description: item.place_name
                   })
                 )
+                setQuery(item.text)
                 console.log(item.geometry.coordinates)
                 navigation.navigate('carScreen')
               }}

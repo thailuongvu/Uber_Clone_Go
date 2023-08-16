@@ -14,7 +14,7 @@ export default function UserLocation() {
         return
       }
 
-      let curlocation = await Location.getCurrentPositionAsync({})
+      const curlocation = await Location.getCurrentPositionAsync({})
       setLocation(curlocation)
       console.log(curlocation)
     })()
@@ -23,7 +23,9 @@ export default function UserLocation() {
   console.log(location)
   return (
     <View style={styles.container}>
-      <Text style={styles.paragraph}>{}</Text>
+      <Text style={styles.paragraph}>
+        {location?.coords.longitude}+{location?.coords.latitude}
+      </Text>
     </View>
   )
 }

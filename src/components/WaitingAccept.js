@@ -6,12 +6,15 @@ import AntDesgin from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Separator from './separators'
+import PushRequest from './PushRequest'
 
 const WaitingAccept = () => {
   const travelInfoUser = useSelector(selectTravelInfoUser)
   const origin = useSelector(selectOrigin)
   const destination = useSelector(selectDestination)
   console.log(travelInfoUser)
+  PushRequest()
+
   return (
     <View className=''>
       <Text className='font-semibold text-center text-2xl'>Waiting...</Text>
