@@ -1,42 +1,77 @@
-import React, { useState, useEffect } from 'react'
-import { Platform, Text, View, StyleSheet } from 'react-native'
-import * as Location from 'expo-location'
+import React, { useEffect, useState } from 'react';
+import { View, Text,StyleSheet } from 'react-native';
+import * as Location from 'expo-location';
 
-export default function UserLocation() {
-  const [location, setLocation] = useState(null)
-  const [errorMsg, setErrorMsg] = useState(null)
+const UserLocation = () => {
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    ;(async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync()
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied')
-        return
+    const getLocation = async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setError('Permission to access location was denied');
+          return;
+        }
+
+        const location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+      
+      } catch (error) {
+        setError(error.message);
       }
+    };
 
-      const curlocation = await Location.getCurrentPositionAsync({})
-      setLocation(curlocation)
-      console.log(curlocation)
-    })()
-  }, [])
+    getLocation();
+  }, []);
+  if(location){
+    console.log(location)
+  }else{
+    console.log('no location')
+  }
 
-  console.log(location)
   return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>
-        {location?.coords.longitude}+{location?.coords.latitude}
-      </Text>
+    <View>
+      {location ? (
+        <Text>
+          Latitude: {location.coords.latitude}, Longitude: {location.coords.longitude}
+        </Text>
+      ) : (
+        <Text>Loading location...</Text>
+      )}
+      {error && <Text>Error: {error}</Text>}
     </View>
-  )
-}
+  );
+};
 
+export default UserLocation;
 const styles = StyleSheet.create({
-  container: {
+  body: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: '#000',
+    justifyContent:'flex-end'
   },
-  paragraph: {
-    fontSize: 10,
-    textAlign: 'center'
+  btn:{
+    display:'flex',
+    flexDirection:'column',
+    padding:10,
+  },
+  input: {
+    marginTop: 50,
+    borderRadius: 20,
+    marginBottom: 10,
+    borderColor: '#555',
+    fontSize: 20,
+    backgroundColor: '#fff',
+    textAlign: 'auto',
+    width: 330,
+    borderWidth: 1,
+    height: 60,
+    padding: 20
+  },
+  text: {
+    color: '#fff',
   }
 })

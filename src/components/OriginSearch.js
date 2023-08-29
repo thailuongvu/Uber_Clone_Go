@@ -16,6 +16,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import { FontAwesome } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import UserLocation from '../components/UserLocation'
 
 const OriginSearch = () => {
   const navigation = useNavigation()
@@ -47,6 +48,7 @@ const OriginSearch = () => {
 
   return (
     <View classname='flex-1'>
+      <UserLocation/>
       <View className='p-2 pl-6 pb-2 pt-2 bg-gray-300 m-2 flex-row'>
         <View className='mt-1'>
           <Ionicon name='location-sharp' size={24} color='red' />

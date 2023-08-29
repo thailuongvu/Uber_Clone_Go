@@ -5,9 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState({ name: 'Huy' })
-  const [isLoading, setIsLoading] = useState(false)
-  const [splashLoading, setSplashLoading] = useState(false)
+  const [userInfo, setUserInfo] = useState({});
+  const [profile, setProfile] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [splashLoading, setSplashLoading] = useState(false);
+  const [isBusy, setIsBusy] = useState(true);
+  const [dataTrip, setDataTrip] = useState({});
   const RegisterFunction = (name, phone, password, confirm_password) => {
     setIsLoading(true)
     fetch(`${BASE_URL}/users/register`, {
@@ -36,29 +39,31 @@ export const AuthProvider = ({ children }) => {
   }
 
   const login = (phone, password) => {
-    setIsLoading(true)
+    setIsLoading(true);
     fetch(`${BASE_URL}/users/login`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         phone: phone,
-        password: password
-      })
+        password: password,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
-        setUserInfo(data.result)
-        AsyncStorage.setItem('userInfo', JSON.stringify(data.result))
-        setIsLoading(false)
-        console.log(data.result)
+        setUserInfo(data.result);
+        AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
+        setIsLoading(false);
+        setProfile(data.user);
+        AsyncStorage.setItem("profile", JSON.stringify(data.user));
+        console.log(data.user.name);
       })
       .catch((error) => {
-        console.error(error)
-        setIsLoading(false)
-      })
-  }
+        console.error(error);
+        setIsLoading(false);
+      });
+  };
 
   const logout = () => {
     setIsLoading(true)
@@ -86,20 +91,23 @@ export const AuthProvider = ({ children }) => {
 
   const isLoggedIn = async () => {
     try {
-      setSplashLoading(true)
-      let userInfor = await AsyncStorage.getItem('userInfo')
-      userInfor = JSON.parse(userInfor)
+      setSplashLoading(true);
+      let userInfor = await AsyncStorage.getItem("userInfo");
+      let profileuser = await AsyncStorage.getItem("profile");
+      userInfor = JSON.parse(userInfor);
+      profileuser = JSON.parse(profileuser);
 
       if (userInfor) {
-        setUserInfo(userInfor)
+        setUserInfo(userInfor);
+        setProfile(profileuser);
       }
 
-      setSplashLoading(false)
+      setSplashLoading(false);
     } catch (error) {
-      setIsLoading(false)
-      console.log(error)
+      setIsLoading(false);
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     isLoggedIn()
